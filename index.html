@@ -12,19 +12,70 @@
 
 
     <script>
+
+        class Ujian {
+
+        }
+
+
         function fetchData() {
             // alert('fetch data');
             $.getJSON("https://filkom.ub.ac.id/info/jadwal_ujian", function (data) {
-                var items = [];
+
+                var days = [];
+                var rooms = [];
+                var exams = [];
+
+                var aDay = null;
+
                 console.log('data : ' + data);
-                $.each(data, function (key, val) {
-                    items.push("<li id='" + key + "'>" + val + "</li>");
+
+                // fetch hari
+                $.each(data, function (key, daysResponse) {
+                    days.push("<li id='" + key + "'>" + daysResponse + "</li>");
+
+                    // outputkan ke console
+                    // console.log(JSON.stringify(val));
+                    aDay = daysResponse;
+                    days.push(daysResponse);
+
+                    // loop di tiap-tiap hari buat dapetin ruangan apa aja
+                    $.each(daysResponse, function (key, roomsResponse) {
+                        // console.log(roomsResponse);
+                        rooms.push(roomsResponse);
+
+                        // loop di tiap-tiap ruangan buat dapet ujian di ruangan tsb apa aja
+                        $.each(roomsResponse, function (key, ujianResponse) {
+                            // console.log(ujianResponse['matakuliah']);
+                            exams.push(ujianResponse);
+                        });
+
+                    });
+
                 });
 
                 $("<ul/>", {
                     "class": "my-new-list",
-                    html: items.join("")
+                    html: days.join("")
                 }).appendTo("body");
+
+                // print semua exams
+                // for (const exam in exams) {
+                //     if (exams.hasOwnProperty(exam)) {
+                //         const element = exams[exam];
+                //         // console.log(element);
+                //     }
+                // }
+                
+                // print semua hari
+                  for (const day in days) {
+                    if (days.hasOwnProperty(day)) {
+                        const element = days[day];
+                        console.log(element);
+                    }
+                }
+
+              
             });
         }
     </script>
