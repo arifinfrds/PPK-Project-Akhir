@@ -20,6 +20,7 @@
 
         var objDays = [];
         var daysList = [];
+        var dayNames = [];
         var rooms = [];
         var exams = [];
 
@@ -36,8 +37,8 @@
                     objDays.push("<li id='" + key + "'>" + daysResponse + "</li>");
                     console.log('key : ' + key);
                     daysList.push('<li id="' + key + '">' + key + '</li>');
-
-
+                    dayNames.push(key);
+                    
                     // outputkan ke console
                     // console.log(JSON.stringify(val));
                     aDay = daysResponse;
@@ -64,43 +65,20 @@
                     "class": "my-new-list",
                     html: objDays.join("")
                 }).appendTo("body");
-
-                // print semua exams
-                // for (const exam in exams) {
-                //     if (exams.hasOwnProperty(exam)) {
-                //         const element = exams[exam];
-                //         // console.log(element);
-                //     }
-                // }
-
-                // // print semua hari
-                // for (const day in objDays) {
-                //     if (objDays.hasOwnProperty(day)) {
-                //         const element = objDays[day];
-                //         console.log(element);
-                //     }
-                // }
             });
         }
 
         function updateUI() {
             console.log('updateUI()');
 
-            // print semua hari
-            for (const day in objDays) {
-                if (objDays.hasOwnProperty(day)) {
-                    const element = objDays[day];
-                    // console.log(element);
-                    // typeof objDays;
-                }
-            }
-
             // get nama2 hari dan tampilkan
-            daysList.forEach(element => {
-                console.log(element);
-                // document.getElementById('my-new-list').innerHTML += (element);
-                
-
+            dayNames.forEach(dayName => {
+                console.log(dayName);
+                var ul = document.getElementById("list");
+                var li = document.createElement("li");
+                var textNode = document.createTextNode(dayName);
+                li.appendChild(textNode)
+                ul.appendChild(li);
             });
 
         }
@@ -110,40 +88,44 @@
 
 <body>
 
-    <div data-role="header">
-        <h2>Hari Ujian</h2>
-        <a href="#" class="ui-btn ui-corner-all ui-btn-inline ui-mini footer-button-left ui-btn-icon-left ui-icon-power">Quit</a>
-        <a href="#" class="ui-btn ui-corner-all ui-btn-inline ui-mini footer-button-right ui-btn-icon-right ui-icon-carat-r">Next</a>
+    <!-- MARK: - Hari Ujian Screen -->
+    <div>
+        <!-- MARK: - toolbar -->
+        <div data-role="header">
+            <h2>Hari Ujian</h2>
+            <a href="#" class="ui-btn ui-corner-all ui-btn-inline ui-mini footer-button-left ui-btn-icon-left ui-icon-power">Quit</a>
+            <a href="#" class="ui-btn ui-corner-all ui-btn-inline ui-mini footer-button-right ui-btn-icon-right ui-icon-carat-r">Next</a>
+        </div>
+
+        <!-- MARK: - ListView -->
+        <ul data-role="listview" id="list">
+            <li>
+                <a href="#">Acura</a>
+            </li>
+            <li>
+                <a href="#">Audi</a>
+            </li>
+            <li>
+                <a href="#">BMW</a>
+            </li>
+            <li>
+                <a href="#">Cadillac</a>
+            </li>
+            <li>
+                <a href="#">Ferrari</a>
+            </li>
+        </ul>
+
+        <!-- MARK: - javascript when apps first load -->
+        <script>
+            jQuery(document).ready(function ($) {
+                console.log('jQuery - ready');
+                fetchData();
+            })
+        </script>
+
     </div>
 
-    <ul data-role="listview" class="my-new-list">
-        <li>
-            <a href="#">Acura</a>
-        </li>
-        <li>
-            <a href="#">Audi</a>
-        </li>
-        <li>
-            <a href="#">BMW</a>
-        </li>
-        <li>
-            <a href="#">Cadillac</a>
-        </li>
-        <li>
-            <a href="#">Ferrari</a>
-        </li>
-    </ul>
-
-    <script>
-        jQuery(document).ready(function ($) {
-            console.log('jQuery - ready');
-            fetchData();
-        })
-        // window.onload = function what() {
-        //     console.log('jQuery - ready');
-        //     fetchData();
-        // };
-    </script>
 
 </body>
 
